@@ -32,7 +32,9 @@ const citizen_login = async (req, res) => {
         const token_data = { id: id };
         const token = jwt.sign(token_data, process.env.JWT);
         return res.cookie("token", token).status(200).json({
-          msg: "Password mathced User Logined",
+          "msg": "Password mathced User Logined",
+          "token":token
+          
         });
       }
     });

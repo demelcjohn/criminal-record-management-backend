@@ -1,13 +1,14 @@
+const cases = require("../Models/case_schema");
+
 const profile_request = require("../Models/pofile_request_schema");
 
 const add_new_request = async (req, res) => {
   try {
-    
     // var requested_by = "6601df17d9a53a93efa098b6";
     // // requested_by = req.user;
     const new_request = await profile_request.create({
-        requested_by: req.user,
-        requested_to: req.body.userid,
+      requested_by: req.user,
+      requested_to: req.body.userid,
     });
     return res.status(200).json({
       data: new_request,
@@ -80,30 +81,39 @@ const get_all_requests_by_a_user = async (req, res) => {
   }
 };
 
-const get_public_profile = async (req,res)=>{
-    try{
-        const requestid = req.params.id;
-        const request = await profile_request.findOne({_id:requestid});
-        if(request.is_approved == true && request.requested_by === req.user)
-        {
-            
-        }
-        else
-        {
-            return(res.status(403).json({"msg":"You are not authenticated to view the public profile"}))
-        }
+const get_public_profile = async (req, res) => {
+  try {
+    const requestid = req.params.id;
+    const request = await profile_request.findOne({ _id: requestid });
+    console.log(request.requested_by);
+    console.log(req.user);
+    console.log(request.is_approved);
+    if (
+      request.is_approved === true &&
+      request.requested_by.toString() === req.user.toString()
+    ) {
+      const case_data = await cases.find({
+        usersInvolved: request.requested_to,
+      });
+      console.log(case_data);
+      return res.status(200).json(case_data);
+    } else {
+      return res
+        .status(403)
+        .json({ msg: "You are not authenticated to view the public profile" });
     }
-    catch (e) {
-        return res.status(500).json({
-          msg: "Error",
-          "error msg": e.message,
-        });
-      }
-}
+  } catch (e) {
+    return res.status(500).json({
+      msg: "Error",
+      "error msg": e.message,
+    });
+  }
+};
 module.exports = {
   add_new_request,
   add_new_request,
   get_all_requests_by_a_user,
   get_all_requests_to_a_user,
   accept_request,
+  get_public_profile,
 };
