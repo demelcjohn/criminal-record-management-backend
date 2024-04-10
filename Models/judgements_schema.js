@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 const judgement_schema = Schema({
     case_id:{
         typeof:Schema.Types.ObjectId,
-        ref:"case"
     },
     judgement:{
         type:String

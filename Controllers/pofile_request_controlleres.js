@@ -1,4 +1,5 @@
 const cases = require("../Models/case_schema");
+const judgement = require("../Models/judgements_schema");
 
 const profile_request = require("../Models/pofile_request_schema");
 
@@ -95,8 +96,17 @@ const get_public_profile = async (req, res) => {
       const case_data = await cases.find({
         usersInvolved: request.requested_to,
       });
-      console.log(case_data);
-      return res.status(200).json(case_data);
+      var profile_data = [];
+      for(var i=0;i<case_data.length;i++)
+      {
+        var judgements = await judgement.find({case_id:case_data[i]._id});
+        profile_data[i] = {
+          "case" : case_data[i],
+          "judgements"  : judgements
+        }
+      }
+      console.log(profile_data);
+      return res.status(200).json(profile_data);
     } else {
       return res
         .status(403)
@@ -109,6 +119,20 @@ const get_public_profile = async (req, res) => {
     });
   }
 };
+
+const get_indudual_request = async (req,res)=>{
+  try{
+    const id = req.params.id;
+    const data = await profile_request.findOne({_id:id});
+    return(res.status(200).json(data));
+  }
+  catch (e) {
+    return res.status(500).json({
+      msg: "Error",
+      "error msg": e.message,
+    });
+  }
+}
 module.exports = {
   add_new_request,
   add_new_request,
@@ -116,4 +140,5 @@ module.exports = {
   get_all_requests_to_a_user,
   accept_request,
   get_public_profile,
+  get_indudual_request
 };

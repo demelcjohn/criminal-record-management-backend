@@ -98,6 +98,20 @@ const get_indudaual_citizen_user = async (req, res) => {
   }
 };
 
+
+const search_citizen = async(req,res)=>{
+  try{
+    const data  = await citizen.findOne({UID:req.data.UID});
+    return res.status(200).json(data);
+  }
+  catch (e) {
+    return res.status(500).json({
+      msg: "Error",
+      "error msg": e.message,
+    });
+  }
+}
+
 const test = (req, res) => {
   return res.status(200).json({ message: "sucess" });
 };
@@ -109,4 +123,5 @@ module.exports = {
   delete_citizen_user,
   get_indudaual_citizen_user,
   update_citizen_user,
+  search_citizen
 };

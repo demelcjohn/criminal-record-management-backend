@@ -14,6 +14,7 @@ const {
   get_all_requests_to_a_user,
   get_all_requests_by_a_user,
   get_public_profile,
+  get_indudual_request,
 } = require("../Controllers/pofile_request_controlleres");
 const { get_indudaual_citizen_user } = require("../Controllers/citizen_data_entry_contoller");
 
@@ -38,5 +39,6 @@ citizen_routes.get(
 );
 
 citizen_routes.get("/profile/:id",citizen_authentication,get_public_profile);
+citizen_routes.get("/request/:id",citizen_authentication,get_indudual_request);
 
 module.exports = citizen_routes;

@@ -18,10 +18,6 @@ const police_Schema = Schema(
       type: String,
       required: true,
     },
-    address: {
-      type: String,
-      required: true,
-    },
     phNo: {
       type: Number,
       required: true,
