@@ -7,13 +7,13 @@ const add_new_citizen = async (req, res) => {
       UID: req.body.uid,
       name: req.body.name,
       password: req.body.password,
-      dob : req.body.dob,
-      gender : req.body.gender,
-      housename:req.body.housename,
-      street:req.body.steet,
-      city:req.body.city,
-      state:req.body.state,
-      country:req.body.country,
+      dob: req.body.dob,
+      gender: req.body.gender,
+      housename: req.body.housename,
+      street: req.body.steet,
+      city: req.body.city,
+      state: req.body.state,
+      country: req.body.country,
       phNo: req.body.phNo,
       email: req.body.email,
     });
@@ -98,19 +98,18 @@ const get_indudaual_citizen_user = async (req, res) => {
   }
 };
 
-
-const search_citizen = async(req,res)=>{
-  try{
-    const data  = await citizen.findOne({UID:req.data.UID});
+const search_citizen = async (req, res) => {
+  try {
+    const UID = req.params.UID;
+    const data = await citizen.find({ UID: UID });
     return res.status(200).json(data);
-  }
-  catch (e) {
+  } catch (e) {
     return res.status(500).json({
       msg: "Error",
       "error msg": e.message,
     });
   }
-}
+};
 
 const test = (req, res) => {
   return res.status(200).json({ message: "sucess" });
@@ -123,5 +122,5 @@ module.exports = {
   delete_citizen_user,
   get_indudaual_citizen_user,
   update_citizen_user,
-  search_citizen
+  search_citizen,
 };

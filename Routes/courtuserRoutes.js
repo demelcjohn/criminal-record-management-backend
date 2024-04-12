@@ -13,4 +13,6 @@ court_routes.get("/cases",get_all_cases);
 
 court_routes.get("/judgement/:id",get_judgememt_of_particular_case);
 
+
+
 module.exports = court_routes;

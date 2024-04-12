@@ -15,8 +15,9 @@ const {
   get_all_requests_by_a_user,
   get_public_profile,
   get_indudual_request,
+  get_my_public_profile,
 } = require("../Controllers/pofile_request_controlleres");
-const { get_indudaual_citizen_user } = require("../Controllers/citizen_data_entry_contoller");
+const { get_indudaual_citizen_user, search_citizen } = require("../Controllers/citizen_data_entry_contoller");
 
 const citizen_routes = express.Router();
 
@@ -25,6 +26,7 @@ citizen_routes.post("/login", citizen_login);
 
 citizen_routes.get("/login", citizen_authentication, login_test);
 citizen_routes.get("/profile",citizen_authentication,get_indudaual_citizen_user);
+citizen_routes.get("/mycases",citizen_authentication,get_my_public_profile);
 citizen_routes.post("/request", citizen_authentication, add_new_request);
 citizen_routes.put("/request/:id", citizen_authentication, accept_request);
 citizen_routes.get(
@@ -40,5 +42,6 @@ citizen_routes.get(
 
 citizen_routes.get("/profile/:id",citizen_authentication,get_public_profile);
 citizen_routes.get("/request/:id",citizen_authentication,get_indudual_request);
+citizen_routes.get("/:UID",citizen_authentication,search_citizen);
 
 module.exports = citizen_routes;

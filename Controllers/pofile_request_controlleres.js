@@ -1,4 +1,5 @@
 const cases = require("../Models/case_schema");
+const citizen_schema = require("../Models/citizen_schema");
 const judgement = require("../Models/judgements_schema");
 
 const profile_request = require("../Models/pofile_request_schema");
@@ -82,6 +83,18 @@ const get_all_requests_by_a_user = async (req, res) => {
   }
 };
 
+const get_judgment = async (caseId) => {
+  try {
+    let judgments = [];
+    judgments = await judgement.find({ case_id: caseId });
+    console.log(judgments);
+    return judgments;
+  } catch (error) {
+    console.error("Error fetching judgments:", error);
+    return []; // Return an empty array if there's an error
+  }
+};
+
 const get_public_profile = async (req, res) => {
   try {
     const requestid = req.params.id;
@@ -97,15 +110,16 @@ const get_public_profile = async (req, res) => {
         usersInvolved: request.requested_to,
       });
       var profile_data = [];
-      for(var i=0;i<case_data.length;i++)
-      {
-        var judgements = await judgement.find({case_id:case_data[i]._id});
+      for (var i = 0; i < case_data.length; i++) {
+        let judgments = [];
+        let caseId = case_data[i]._id;
+        judgments = await judgement.find({ case_id: caseId });
         profile_data[i] = {
-          "case" : case_data[i],
-          "judgements"  : judgements
-        }
+          case: case_data[i],
+          judgements: judgments,
+        };
       }
-      console.log(profile_data);
+      // console.log(profile_data);
       return res.status(200).json(profile_data);
     } else {
       return res
@@ -120,19 +134,47 @@ const get_public_profile = async (req, res) => {
   }
 };
 
-const get_indudual_request = async (req,res)=>{
-  try{
-    const id = req.params.id;
-    const data = await profile_request.findOne({_id:id});
-    return(res.status(200).json(data));
-  }
-  catch (e) {
+const get_my_public_profile = async (req, res) => {
+  try {
+    console.log(req.user);
+    const user = req.user;
+    const case_data = await cases.find({
+      usersInvolved: user,
+    });
+    var profile_data = [];
+    for (var i = 0; i < case_data.length; i++) {
+      let judgments = [];
+      let caseId = case_data[i]._id;
+      judgments = await judgement.find({ case_id: caseId });
+      profile_data[i] = {
+        case: case_data[i],
+        judgements: judgments,
+      };
+    }
+    // console.log(profile_data);
+    return res.status(200).json(profile_data);
+    return res.status(200).json({ msg: "sucess" });
+  } catch (e) {
     return res.status(500).json({
       msg: "Error",
       "error msg": e.message,
     });
   }
-}
+};
+
+const get_indudual_request = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const data = await profile_request.findOne({ _id: id });
+    console.log(data);
+    return res.status(200).json(data);
+  } catch (e) {
+    return res.status(500).json({
+      msg: "Error",
+      "error msg": e.message,
+    });
+  }
+};
 module.exports = {
   add_new_request,
   add_new_request,
@@ -140,5 +182,6 @@ module.exports = {
   get_all_requests_to_a_user,
   accept_request,
   get_public_profile,
-  get_indudual_request
+  get_indudual_request,
+  get_my_public_profile,
 };

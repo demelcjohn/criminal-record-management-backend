@@ -6,6 +6,7 @@ const cors = require("cors");
 const superuser_router = require("./Routes/superuserRoutes");
 const police_routes = require("./Routes/policeuserRoutes");
 const citizen_routes = require("./Routes/citizenuserRoutes");
+const court_routes = require("./Routes/courtuserRoutes");
 
 require("dotenv").config();
 
@@ -41,6 +42,7 @@ mongoose
 app.use("/admin", superuser_router);
 app.use("/police", police_routes);
 app.use("/citizen", citizen_routes);
+app.use("/court",court_routes);
 
 
 app.listen(process.env.PORT, () => {

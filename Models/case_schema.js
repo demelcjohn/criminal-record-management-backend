@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const case_schema = Schema({
   caseNo: {
     type: Number,
@@ -17,10 +16,12 @@ const case_schema = Schema({
   status: {
     type: String,
   },
-  usersInvolved: [{
-    type: Schema.Types.ObjectId,
-    ref: 'citizen'
-  }],
+  usersInvolved: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "citizen",
+    },
+  ],
 });
 
 module.exports = mongoose.model("case", case_schema);
