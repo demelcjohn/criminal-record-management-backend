@@ -2,21 +2,46 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const case_schema = Schema({
-  caseNo: {
-    type: Number,
-    required: true,
+  case_type:{
+    type:String,
   },
-  caseTitle: {
-    type: String,
-    required: true,
+  fillig_number:{
+    type:String
   },
-  caseDiscription: {
-    type: String,
+  filling_date:{
+    type:String
   },
-  status: {
-    type: String,
+  registration_number:{
+    type:String,
+  },
+  registration_date:{
+    type:String
+  },
+  cnr_number:{
+    type:String
+  },
+  acts:{
+    type:String
+  },
+  sections:{
+    type:String
+  },
+  police_station:{
+    type:String
+  },
+  fir_number:{
+    type:String
+  },
+  year:{
+    type:String
   },
   usersInvolved: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "citizen",
+    },
+  ],
+  usersResponded: [
     {
       type: Schema.Types.ObjectId,
       ref: "citizen",

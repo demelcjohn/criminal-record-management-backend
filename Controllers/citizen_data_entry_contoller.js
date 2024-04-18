@@ -4,7 +4,7 @@ const add_new_citizen = async (req, res) => {
   try {
     console.log(req.body);
     const new_citizen_user = await citizen.create({
-      UID: req.body.uid,
+      UID: req.body.UID,
       name: req.body.name,
       password: req.body.password,
       dob: req.body.dob,
@@ -25,7 +25,7 @@ const add_new_citizen = async (req, res) => {
   } catch (e) {
     return res.status(400).json({
       msg: "Citizen canot be Created",
-      "error msg": e.message,
+      error_msg: e.message,
     });
   }
 };

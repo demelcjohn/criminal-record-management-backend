@@ -2,7 +2,23 @@ const court = require("../Models/court_schema");
 
 const add_new_court_user = async (req,res)=>{
     try{
+      const data = await court.create({
+        UID:req.body.UID,
+        name:req.body.name,
+        password:req.body.password,
+        housename:req.body.housename,
+        street:req.body.street,
+        street:req.body.street,
+        city:req.body.city,
+        pin:req.body.pin,
+        state:req.body.state,
+        country:req.body.country,
+        phno:req.body.phno,
+        email:req.body.email,
+        court_name:req.body.court_name
+      })
 
+      return(res.status(200).json({"msg":"new Court user created"}));
     }
     catch (e) {
         return res.status(500).json({

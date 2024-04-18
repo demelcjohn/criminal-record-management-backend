@@ -18,9 +18,27 @@ const police_Schema = Schema(
       type: String,
       required: true,
     },
+    housename:{
+      type:String
+    },
+    street:{
+      type:String
+    },
+    city:{
+      type:String
+    },
+    pin:{
+      type:String
+    },
+    state:{
+      type:String
+    },
+    country:{
+      type:String
+    },
     phNo: {
       type: Number,
-      required: true,
+      
     },
     email: {
       type: String,

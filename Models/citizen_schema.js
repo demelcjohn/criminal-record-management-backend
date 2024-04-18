@@ -18,33 +18,32 @@ const citizen_Schema = Schema(
       type: String,
       required: true,
     },
-    dob:{
-      type:Date
+    dob: {
+      type: String,
     },
-    gender:{
-      type:String
+    gender: {
+      type: String,
     },
-    housename:{
-      type:String
+    housename: {
+      type: String,
     },
-    street:{
-      type:String,
+    street: {
+      type: String,
     },
-    city:{
-      type:String
+    city: {
+      type: String,
     },
-    state:{
-      type:String
+    state: {
+      type: String,
     },
-    pin:{
-      type:String
+    pin: {
+      type: String,
     },
-    country:{
-      type:String
+    country: {
+      type: String,
     },
     phNo: {
       type: Number,
-      required: true,
     },
     email: {
       type: String,

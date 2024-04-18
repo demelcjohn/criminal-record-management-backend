@@ -27,12 +27,12 @@ const citizen_authentication = async (req, res, next) => {
 };
 
 const police_authentication = async (req, res, next) => {
-  const token = req.cookies.token;
   try {
-    const token = req.cookies.token;
+    const token = req.headers.token;
+    console.log(token);
     const verified_token = jwt.verify(token, process.env.jwt);
     const id = verified_token.id;
-    const user = await police.findOne({ _id: id });
+    const user = await citizen.findOne({ _id: id });
 
     if (!user) {
       return res.status(401).json({ nsg: "User Not Found" });
@@ -50,9 +50,8 @@ const police_authentication = async (req, res, next) => {
 };
 
 const court_authentication = async (req, res, next) => {
-  const token = req.cookies.token;
   try {
-    const token = req.cookies.token;
+    const token = req.headers.token;
     const verified_token = jwt.verify(token, process.env.jwt);
     const id = verified_token.id;
     const user = await court.findOne({ _id: id });
