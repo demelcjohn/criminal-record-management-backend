@@ -71,6 +71,7 @@ const get_indudual_cases = async (req, res) => {
 
 const search_cnr = async (req, res) => {
   const cnr = req.params.id;
+  console.log(cnr);
   try {
     const data = await cases
       .findOne({ cnr_number: cnr })
