@@ -100,8 +100,12 @@ const get_indudaual_citizen_user = async (req, res) => {
 
 const search_citizen = async (req, res) => {
   try {
+    console.log("=================================", req.params.UID);
     const UID = req.params.UID;
+    console.log(UID);
+    console.log(typeof UID);
     const data = await citizen.find({ UID: UID });
+
     return res.status(200).json(data);
   } catch (e) {
     return res.status(500).json({

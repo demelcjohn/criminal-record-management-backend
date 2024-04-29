@@ -1,5 +1,5 @@
 const cases = require("../Models/case_schema");
-const citizen_schema = require("../Models/citizen_schema");
+const citizen = require("../Models/citizen_schema");
 const judgement = require("../Models/judgements_schema");
 
 const profile_request = require("../Models/pofile_request_schema");
@@ -138,9 +138,11 @@ const get_my_public_profile = async (req, res) => {
   try {
     console.log(req.user);
     const user = req.user;
+    const userdata = await citizen.findOne({ _id: user });
     const case_data = await cases.find({
       usersInvolved: user,
     });
+
     var profile_data = [];
     for (var i = 0; i < case_data.length; i++) {
       let judgments = [];
@@ -151,8 +153,13 @@ const get_my_public_profile = async (req, res) => {
         judgements: judgments,
       };
     }
+
+    const data = {
+      userdata: userdata,
+      profile_data: profile_data,
+    };
     // console.log(profile_data);
-    return res.status(200).json(profile_data);
+    return res.status(200).json(data);
     return res.status(200).json({ msg: "sucess" });
   } catch (e) {
     return res.status(500).json({

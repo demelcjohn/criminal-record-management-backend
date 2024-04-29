@@ -96,10 +96,26 @@ const get_indudaual_police_user = async (req, res) => {
   }
 };
 
+const get_logined_police_user = async (req, res) => {
+  try {
+    const id = req.user;
+    const data = await police.findOne({ _id: id });
+    console.log("loginde user = ");
+    console.log(data);
+    return res.status(200).json(data);
+  } catch (e) {
+    return res.status(500).json({
+      msg: "Error",
+      "error msg": e.message,
+    });
+  }
+};
+
 module.exports = {
   add_police_user,
   get_all_police_user,
   delete_police_user,
   update_police_user,
   get_indudaual_police_user,
+  get_logined_police_user,
 };

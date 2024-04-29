@@ -7,6 +7,9 @@ const judgement_schema = Schema({
     type: Schema.Types.ObjectId,
     ref: "case",
   },
+  judgement_title: {
+    type: String,
+  },
   judgement: {
     type: String,
   },

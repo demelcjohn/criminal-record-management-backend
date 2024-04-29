@@ -32,13 +32,14 @@ const police_authentication = async (req, res, next) => {
     console.log(token);
     const verified_token = jwt.verify(token, process.env.jwt);
     const id = verified_token.id;
-    const user = await citizen.findOne({ _id: id });
+    console.log(id);
+    const user = await police.findOne({ _id: id });
 
     if (!user) {
       return res.status(401).json({ nsg: "User Not Found" });
     } else {
       req.user = user._id;
-      // console.log(user);
+      console.log(req.user);
       next();
     }
   } catch (e) {
@@ -57,7 +58,7 @@ const court_authentication = async (req, res, next) => {
     const user = await court.findOne({ _id: id });
 
     if (!user) {
-      return res.status(401).json({ nsg: "User Not Found" });
+      return res.status(401).json({ msg: "User Not Found" });
     } else {
       req.user = user._id;
       // console.log(user);
